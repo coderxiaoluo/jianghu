@@ -1,0 +1,236 @@
+/**
+ * 通用reset.scss（兼容PC端 + 移动端）
+ * 功能：清除浏览器默认样式、统一跨端基础样式、解决常见样式兼容问题
+ * 使用：直接在项目入口样式中导入（@import "./reset.scss";）
+ */
+
+// -------------------------- 第一步：定义Scss全局变量（方便后续统一修改） --------------------------
+$base-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans SC", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "SimSun", sans-serif; // 跨端通用字体栈
+$base-font-size: 16px; // PC端基础字体大小
+$mobile-base-font-size: 14px; // 移动端基础字体大小
+$base-text-color: #333; // 通用文本颜色
+$link-color: #1890ff; // 链接默认颜色
+$link-hover-color: #096dd9; // 链接hover颜色
+$tap-highlight-color: transparent; // 移动端点击高亮色（清除）
+
+// -------------------------- 第二步：全局通用样式重置（PC + 移动端共用） --------------------------
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; // 统一盒模型（宽高包含边框和内边距）
+  -webkit-box-sizing: border-box; // 兼容webkit内核浏览器（移动端/Chrome/Safari）
+}
+
+// 伪元素也统一盒模型（解决::before/::after样式错乱）
+*::before,
+*::after {
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+
+// body基础样式
+body {
+  font-family: $base-font-family; // 通用字体
+  font-size: $base-font-size; // PC端基础字体
+  line-height: 1.5; // 合理行高（提升可读性）
+  color: $base-text-color; // 通用文本颜色
+  background-color: #fff; // 默认背景色
+  -webkit-font-smoothing: antialiased; // 开启字体抗锯齿（移动端/webkit浏览器，文字更清晰）
+  -moz-osx-font-smoothing: grayscale; // 火狐浏览器字体抗锯齿
+  text-rendering: optimizeLegibility; // 优化字体渲染
+  overflow-x: hidden; // 禁止横向滚动（防止意外出现横向滚动条）
+}
+
+// 链接样式重置
+a {
+  color: $link-color;
+  text-decoration: none; // 清除默认下划线
+  transition: color 0.2s ease-in-out; // 过渡动画（提升交互体验）
+
+  // 清除移动端点击高亮
+  -webkit-tap-highlight-color: $tap-highlight-color;
+  tap-highlight-color: $tap-highlight-color;
+
+  // hover状态（仅PC端生效，移动端无hover）
+  &:hover {
+    color: $link-hover-color;
+    text-decoration: underline; // hover时显示下划线
+  }
+
+  // 激活/聚焦状态（提升可访问性）
+  &:active,
+  &:focus {
+    outline: none;
+    color: $link-hover-color;
+  }
+}
+
+// 列表样式重置（ul/ol）
+ul,
+ol {
+  list-style: none; // 清除默认列表标记
+}
+
+// 表格样式重置
+table {
+  border-collapse: collapse; // 合并单元格边框
+  border-spacing: 0; // 清除单元格间距
+  width: 100%; // 表格默认100%宽度
+}
+
+// 图片/视频/svg响应式适配（跨端核心：防止超出容器）
+img,
+video,
+svg {
+  max-width: 100%; // 最大宽度不超过容器
+  height: auto; // 高度自动适应，保持宽高比
+  display: block; // 清除图片底部默认空白间隙
+  border: none; // 清除默认边框（比如ie下图片链接的边框）
+  -webkit-user-drag: none; // 禁止移动端图片拖拽
+  user-drag: none;
+}
+
+// 表单元素重置（统一样式，解决跨端兼容）
+input,
+button,
+select,
+textarea {
+  font-family: inherit; // 继承父级字体（保证字体统一）
+  font-size: inherit; // 继承父级字体大小
+  line-height: inherit; // 继承父级行高
+  color: inherit; // 继承父级文本颜色
+  background: transparent; // 清除默认背景色
+  border: none; // 清除默认边框
+  outline: none; // 清除默认聚焦轮廓
+
+  // 清除移动端表单元素默认外观（比如input的圆角、select的下拉箭头）
+  -webkit-appearance: none;
+  appearance: none;
+
+  // 清除输入框内阴影（ios端）
+  -webkit-box-shadow: none;
+  box-shadow: none;
+
+  // 清除点击高亮
+  -webkit-tap-highlight-color: $tap-highlight-color;
+  tap-highlight-color: $tap-highlight-color;
+}
+
+// 文本域重置（禁止默认拉伸，统一样式）
+textarea {
+  resize: none; // 禁止用户拉伸文本域（如需拉伸，可单独给类名开启）
+  overflow: auto; // 清除默认滚动条样式错乱
+}
+
+// 按钮重置（统一光标样式）
+button {
+  cursor: pointer; // 鼠标悬浮显示手型（PC端）
+
+  &:disabled {
+    cursor: not-allowed; // 禁用状态显示禁止手型
+    opacity: 0.6; // 禁用状态降低透明度
+  }
+}
+
+// 清除默认的引用/代码/标记样式
+blockquote,
+q {
+  quotes: none;
+
+  &::before,
+  &::after {
+    content: "";
+    content: none;
+  }
+}
+
+code,
+kbd,
+samp,
+pre {
+  font-family: "Consolas", "Monaco", "Courier New", monospace; // 代码专用字体
+}
+
+// 清除默认的上标/下标样式
+sup,
+sub {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sup {
+  top: -0.5em;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+// 清除默认的hr样式
+hr {
+  border: 0;
+  border-top: 1px solid #eee;
+  height: 0;
+}
+
+// 隐藏元素（通用类名，可直接使用）
+.hide {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+// 清除浮动（通用混合宏，可通过@include调用，也可直接使用类名）
+@mixin clearfix {
+  &::after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
+// 清除浮动类名（直接使用）
+.clearfix {
+  @include clearfix;
+}
+
+// -------------------------- 第三步：移动端专属适配优化（媒体查询） --------------------------
+// 针对小屏幕设备（手机、平板等，宽度≤768px）做专属优化
+@media (max-width: 768px) {
+  body {
+    font-size: $mobile-base-font-size; // 移动端缩小基础字体，提升可读性
+  }
+
+  // 移动端表单元素优化（增大点击区域，提升交互体验）
+  input,
+  button,
+  select,
+  textarea {
+    min-height: 44px; // 符合移动端交互规范，最小点击区域44px*44px
+  }
+
+  // 移动端禁用文字选中（如需开启，可单独给类名设置user-select: text;）
+  .no-select {
+    -webkit-user-select: none;
+    user-select: none;
+  }
+}
+
+// -------------------------- 第四步：PC端专属适配优化（媒体查询，可选） --------------------------
+// 针对超大屏幕设备（宽度≥2000px）做专属优化
+@media (min-width: 2000px) {
+  body {
+    // 最大宽度同步改大，保持页面居中且不拉伸过度
+    max-width: 2000px;
+    margin: 0 auto;
+  }
+}
+
+// 针对2K大屏设备（宽度≥2560px）做专属优化
+@media (min-width: 2560px) {
+  body {
+    max-width: 2560px;
+    margin: 0 auto;
+  }
+}
