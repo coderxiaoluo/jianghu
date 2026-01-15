@@ -11,6 +11,9 @@ importers:
       element-plus:
         specifier: ^2.13.1
         version: 2.13.1(vue@3.5.26(typescript@5.9.3))
+      gsap:
+        specifier: ^3.14.2
+        version: 3.14.2
       nprogress:
         specifier: ^0.2.0
         version: 0.2.0
@@ -1236,6 +1239,9 @@ packages:
   globals@14.0.0:
     resolution: {integrity: sha512-oahGvuMGQlPw/ivIYBjVSrWAfWLBeku5tpPE2fOPLi+WHffIWbuh2tCjhyQhTBPMf5E9jDEH4FOmTYgYwbKwtQ==}
     engines: {node: '>=18'}
+
+  gsap@3.14.2:
+    resolution: {integrity: sha512-P8/mMxVLU7o4+55+1TCnQrPmgjPKnwkzkXOK1asnR9Jg2lna4tEY5qBJjMmAaOBDDZWtlRjBXjLa0w53G/uBLA==}
 
   has-flag@4.0.0:
     resolution: {integrity: sha512-EykJT/Q1KjTWctppgIAgfSO0tKVuZUjhgMr17kqTumMl6Afv3EISleU7qZUzoXDFTAHTDC4NOoG/ZxU3EvlMPQ==}
@@ -3061,6 +3067,8 @@ snapshots:
       is-glob: 4.0.3
 
   globals@14.0.0: {}
+
+  gsap@3.14.2: {}
 
   has-flag@4.0.0: {}
 
